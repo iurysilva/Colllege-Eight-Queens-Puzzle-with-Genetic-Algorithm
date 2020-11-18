@@ -11,10 +11,10 @@ class Populacao:
 
     def cria_cromossomos(self):
         cromossomos = np.array([])
+        numero_de_bits_por_rainha = (self.parametros.numero_rainhas - 1).bit_length()
+        numero_de_bits_por_cromossomo = numero_de_bits_por_rainha * self.parametros.numero_rainhas
         for cromossomo in range(0, self.numero_cromossomos):
             cromossomo = Cromossomo()
-            numero_de_bits_por_rainha = (self.parametros.numero_rainhas - 1).bit_length()
-            numero_de_bits_por_cromossomo = numero_de_bits_por_rainha * self.parametros.numero_rainhas
             palavra_do_cromossomo = '0' * numero_de_bits_por_cromossomo
             cromossomo.palavra = bitstring.BitArray(bin=palavra_do_cromossomo)
             for i in range(0, numero_de_bits_por_cromossomo):
