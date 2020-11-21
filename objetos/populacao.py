@@ -1,7 +1,8 @@
 from objects.cromossomo import Cromossomo
 import numpy as np
 import bitstring
-
+import random as rand
+import copy as cp
 
 class Populacao:
     def __init__(self, numero_cromossomos, parametros):
@@ -24,3 +25,24 @@ class Populacao:
             cromossomo.calcular_fitness()
             cromossomos = np.append(cromossomos, cromossomo)
         return cromossomos
+
+    def seleciona_cromossomos(self):
+        nova_populacao = Populacao(self.numero_cromossomos, self.parametros)
+        for i in range(nova_populacao.numero_cromossomos):
+            chance_escolha = rand.uniform(0, 1)
+            cromossomo_1 = rand.choice(self.cromossomos)
+            cromossomo_2 = rand.choice(self.cromossomos)
+            cromossomo_1.calcular_fitness()
+            cromossomo_2.calcular_fitness()
+            if (cromossomo_1.fitness <= cromossomo_2.fitness):
+                cromossomo_melhor = cromossomo_1
+                cromossomo_pior = cromossomo_2
+            else:
+                cromossomo_melhor = cromossomo_2
+                cromossomo_pior = cromossomo_1
+
+            if(chance_escolha <= 0.80):
+                nova_populacao.cromossomos[i] = cp.copy(cromossomo_melhor)
+            else:
+                nova_populacao.cromossomos[i] = cp.copy(cromossomo_pior)
+        return nova_populacao
