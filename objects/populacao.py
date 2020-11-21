@@ -11,15 +11,16 @@ class Populacao:
 
     def cria_cromossomos(self):
         cromossomos = np.array([])
-        numero_de_bits_por_rainha = (self.parametros.numero_rainhas - 1).bit_length()
-        numero_de_bits_por_cromossomo = numero_de_bits_por_rainha * self.parametros.numero_rainhas
         for cromossomo in range(0, self.numero_cromossomos):
+            colunas_possiveis = np.array([0, 1, 2, 3, 4, 5, 6, 7])
             cromossomo = Cromossomo()
-            palavra_do_cromossomo = '0' * numero_de_bits_por_cromossomo
-            cromossomo.palavra = bitstring.BitArray(bin=palavra_do_cromossomo)
-            for i in range(0, numero_de_bits_por_cromossomo):
-                if np.random.uniform(0, 1) < 0.5:
-                    cromossomo.palavra.overwrite('0b1', i)
+            cromossomo.bits = bitstring.BitArray(bin='')
+            for linha_rainha in range(0, 8):
+                coluna_rainha = colunas_possiveis[np.random.randint(0, len(colunas_possiveis))]
+                bits = format(coluna_rainha, "#005b")
+                cromossomo.bits.insert(bits, 3*linha_rainha)
+                colunas_possiveis = np.delete(colunas_possiveis, np.where(colunas_possiveis == coluna_rainha))
+                cromossomo.tabuleiro[linha_rainha, coluna_rainha] = 1
+            cromossomo.calcular_fitness()
             cromossomos = np.append(cromossomos, cromossomo)
         return cromossomos
-
