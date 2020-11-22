@@ -1,4 +1,4 @@
-from objects import Parametros, Populacao
+from objetos import Parametros, Populacao
 import numpy as np
 import bitstring
 

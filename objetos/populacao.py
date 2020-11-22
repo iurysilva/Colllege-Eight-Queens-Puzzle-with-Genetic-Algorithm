@@ -1,7 +1,6 @@
-from objects.cromossomo import Cromossomo
+from objetos.cromossomo import Cromossomo
 import numpy as np
 import bitstring
-import random as rand
 import copy as cp
 
 class Populacao:
@@ -29,11 +28,11 @@ class Populacao:
     def seleciona_cromossomos(self):
         nova_populacao = Populacao(self.numero_cromossomos, self.parametros)
         for i in range(nova_populacao.numero_cromossomos):
-            chance_escolha = rand.uniform(0, 1)
-            cromossomo_1 = rand.choice(self.cromossomos)
-            cromossomo_2 = rand.choice(self.cromossomos)
-            cromossomo_1.calcular_fitness()
-            cromossomo_2.calcular_fitness()
+            chance_escolha = np.random.uniform(0, 1)
+            cromossomo_1 = np.random.choice(self.cromossomos)
+            cromossomo_2 = np.random.choice(self.cromossomos)
+            while (cromossomo_2 == cromossomo_1):
+                cromossomo_2 = np.random.choice(self.cromossomos)
             if (cromossomo_1.fitness <= cromossomo_2.fitness):
                 cromossomo_melhor = cromossomo_1
                 cromossomo_pior = cromossomo_2

@@ -1,3 +1,3 @@
-from objects.cromossomo import Cromossomo
-from objects.populacao import Populacao
-from objects.parametros import Parametros
+from objetos.cromossomo import Cromossomo
+from objetos.populacao import Populacao
+from objetos.parametros import Parametros
