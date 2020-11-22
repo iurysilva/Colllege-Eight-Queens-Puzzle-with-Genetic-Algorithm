@@ -31,7 +31,7 @@ class Populacao:
             chance_escolha = np.random.uniform(0, 1)
             cromossomo_1 = np.random.choice(self.cromossomos)
             cromossomo_2 = np.random.choice(self.cromossomos)
-            while (cromossomo_2 == cromossomo_1):
+            while (cromossomo_2.bits == cromossomo_1.bits):
                 cromossomo_2 = np.random.choice(self.cromossomos)
             if (cromossomo_1.fitness <= cromossomo_2.fitness):
                 cromossomo_melhor = cromossomo_1
