@@ -18,13 +18,12 @@ class Populacao:
 
     def gera_posicoes_aleatorias(self):
         for cromossomo in range(0, self.numero_cromossomos):
-            colunas_possiveis = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+            colunas = np.arange(0, 8)
+            np.random.shuffle(colunas)
             for linha_rainha in range(0, 8):
-                index_da_coluna = np.random.randint(0, len(colunas_possiveis))
-                coluna_rainha = colunas_possiveis[index_da_coluna]
+                coluna_rainha = colunas[linha_rainha]
                 bits = format(coluna_rainha, "#005b")
                 self.cromossomos[cromossomo].bits.insert(bits, 3 * linha_rainha)
-                colunas_possiveis = np.delete(colunas_possiveis, index_da_coluna)
                 self.cromossomos[cromossomo].tabuleiro[linha_rainha, coluna_rainha] = 1
             self.cromossomos[cromossomo].calcular_fitness()
 
