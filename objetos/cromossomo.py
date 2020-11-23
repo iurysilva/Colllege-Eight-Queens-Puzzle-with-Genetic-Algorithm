@@ -8,6 +8,9 @@ class Cromossomo:
         self.fitness = 0
         self.tabuleiro = np.zeros((8, 8))
 
+    def __repr__(self):
+        return str(self.bits.bin)
+
     def get_fitness(self):
         return self.fitness
 
