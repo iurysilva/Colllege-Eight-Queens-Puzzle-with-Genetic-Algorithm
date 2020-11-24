@@ -73,4 +73,32 @@ class Populacao:
             populacao_pos_cruzamento.cromossomos[cromossomo+1] = filho_2
         return populacao_pos_cruzamento
 
+    def mutacao_cromossomos(self):
+        for cromossomo in range(self.numero_cromossomos):
+            chance_escolha = np.random.uniform(0, 1)
+            if (chance_escolha <= self.parametros.taxa_mutacao):
+                print("bits: ", self.cromossomos[cromossomo].bits.bin)
+                print(self.cromossomos[cromossomo].tabuleiro)
+                print("Fitness: ", self.cromossomos[cromossomo].fitness)
+                ponto_1 = np.random.randint(0, 7)
+                ponto_2 = np.random.randint(0, 7)
+                print(ponto_1)
+                while (ponto_2 == ponto_1):
+                    ponto_2 = np.random.randint(0, 7)
+                print(ponto_2)
+                bits_1 = self.cromossomos[cromossomo].bits[3*ponto_1:(3*ponto_1)+3]
+                bits_2 = self.cromossomos[cromossomo].bits[3*ponto_2:(3*ponto_2)+3]
+                print(bits_1)
+                print(bits_2)
+                self.cromossomos[cromossomo].bits[3*ponto_1:(3*ponto_1)+3] = bits_2
+                self.cromossomos[cromossomo].bits[3*ponto_2:(3*ponto_2)+3] = bits_1
 
+                self.cromossomos[cromossomo].tabuleiro[ponto_1][int(bits_1.bin, 2)] = 0
+                self.cromossomos[cromossomo].tabuleiro[ponto_2][int(bits_2.bin, 2)] = 0
+                self.cromossomos[cromossomo].tabuleiro[ponto_1][int(bits_2.bin, 2)] = 1
+                self.cromossomos[cromossomo].tabuleiro[ponto_2][int(bits_1.bin, 2)] = 1
+
+                self.cromossomos[cromossomo].calcular_fitness()
+                print("bits: ", self.cromossomos[cromossomo].bits.bin)
+                print(self.cromossomos[cromossomo].tabuleiro)
+                print("Fitness: ", self.cromossomos[cromossomo].fitness)
