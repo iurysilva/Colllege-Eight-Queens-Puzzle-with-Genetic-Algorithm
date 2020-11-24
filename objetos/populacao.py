@@ -1,10 +1,11 @@
 from objetos.cromossomo import Cromossomo
 import numpy as np
 import copy as cp
+from procedimentos import gera_filho
 
 
 class Populacao:
-    def __init__(self, numero_cromossomos, parametros=False):
+    def __init__(self, numero_cromossomos, parametros):
         self.numero_cromossomos = numero_cromossomos
         self.parametros = parametros
         self.cromossomos = self.cria_cromossomos()
@@ -26,7 +27,7 @@ class Populacao:
     def seleciona_cromossomos(self):
         numero_cromossomos = self.numero_cromossomos
         if numero_cromossomos % 2 != 0:
-            numero_cromossomos += numero_cromossomos + 1
+            numero_cromossomos += 1
         nova_populacao = Populacao(numero_cromossomos, self.parametros)
         for i in range(nova_populacao.numero_cromossomos):
             chance_escolha = np.random.uniform(0, 1)
@@ -47,58 +48,43 @@ class Populacao:
                 nova_populacao.cromossomos[i] = cp.copy(cromossomo_pior)
         return nova_populacao
 
-    def gera_filho(self, cromossomo_1, cromossomo_2, ponto):
-        colunas_utilizadas = np.ones(8, dtype='int') * -1
-        cont = 0
-        filho = Cromossomo()
-        bits = cromossomo_2.bits[:3*ponto]
-        bits.insert(cromossomo_2.bits[3*ponto:], 0)
-        bits.insert(cromossomo_1.bits[:3*ponto], 0)
-        for bit in range(0, 24+ponto*3, 3):
-            if int(bits[bit:bit+3].bin, 2) not in colunas_utilizadas:
-                colunas_utilizadas[cont] = int(bits[bit:bit+3].bin, 2)
-                cont += 1
-                filho.bits.insert(bits[bit:bit+3], filho.bits.len)
-        return filho
-
-    def cruza_cromossomos(self, nova_populacao):
-        populacao_pos_cruzamento = Populacao(nova_populacao.numero_cromossomos, self.parametros)
-        for cromossomo in range(nova_populacao.numero_cromossomos//2):
+    def cruza_cromossomos(self):
+        filhos = Populacao(self.numero_cromossomos, self.parametros)
+        for cromossomo in range(0, self.numero_cromossomos, 2):
             ponto = np.random.randint(1, 8)
-            pai = nova_populacao.cromossomos[cromossomo]
-            mae = nova_populacao.cromossomos[cromossomo+1]
-            filho_1 = self.gera_filho(pai, mae, ponto)
-            filho_2 = self.gera_filho(mae, pai, ponto)
-            populacao_pos_cruzamento.cromossomos[cromossomo] = filho_1
-            populacao_pos_cruzamento.cromossomos[cromossomo+1] = filho_2
-        return populacao_pos_cruzamento
+            pai = cp.copy(self.cromossomos[cromossomo])
+            mae = cp.copy(self.cromossomos[cromossomo+1])
+            filho_1 = gera_filho(pai, mae, ponto)
+            filho_2 = gera_filho(mae, pai, ponto)
+            filhos.cromossomos[cromossomo] = filho_1
+            filhos.cromossomos[cromossomo+1] = filho_2
+        return filhos
 
     def mutacao_cromossomos(self):
         for cromossomo in range(self.numero_cromossomos):
             chance_escolha = np.random.uniform(0, 1)
-            if (chance_escolha <= self.parametros.taxa_mutacao):
-                print("bits: ", self.cromossomos[cromossomo].bits.bin)
-                print(self.cromossomos[cromossomo].tabuleiro)
-                print("Fitness: ", self.cromossomos[cromossomo].fitness)
+            if chance_escolha <= self.parametros.taxa_mutacao:
                 ponto_1 = np.random.randint(0, 7)
                 ponto_2 = np.random.randint(0, 7)
-                print(ponto_1)
-                while (ponto_2 == ponto_1):
+                while ponto_2 == ponto_1:
                     ponto_2 = np.random.randint(0, 7)
-                print(ponto_2)
                 bits_1 = self.cromossomos[cromossomo].bits[3*ponto_1:(3*ponto_1)+3]
                 bits_2 = self.cromossomos[cromossomo].bits[3*ponto_2:(3*ponto_2)+3]
-                print(bits_1)
-                print(bits_2)
                 self.cromossomos[cromossomo].bits[3*ponto_1:(3*ponto_1)+3] = bits_2
                 self.cromossomos[cromossomo].bits[3*ponto_2:(3*ponto_2)+3] = bits_1
-
                 self.cromossomos[cromossomo].tabuleiro[ponto_1][int(bits_1.bin, 2)] = 0
                 self.cromossomos[cromossomo].tabuleiro[ponto_2][int(bits_2.bin, 2)] = 0
                 self.cromossomos[cromossomo].tabuleiro[ponto_1][int(bits_2.bin, 2)] = 1
                 self.cromossomos[cromossomo].tabuleiro[ponto_2][int(bits_1.bin, 2)] = 1
-
                 self.cromossomos[cromossomo].calcular_fitness()
-                print("bits: ", self.cromossomos[cromossomo].bits.bin)
-                print(self.cromossomos[cromossomo].tabuleiro)
-                print("Fitness: ", self.cromossomos[cromossomo].fitness)
+
+    def selecao_natural(self, filhos):
+        populacao_final = Populacao(self.numero_cromossomos, self.parametros)
+        self.cromossomos = sorted(self.cromossomos, key=Cromossomo.get_fitness)
+        filhos.cromossomos = sorted(filhos.cromossomos, key=Cromossomo.get_fitness)
+        for cromossomo in range(self.numero_cromossomos):
+            if self.cromossomos[cromossomo].fitness <= filhos.cromossomos[cromossomo].fitness:
+                populacao_final.cromossomos[cromossomo] = cp.copy(self.cromossomos[cromossomo])
+            else:
+                populacao_final.cromossomos[cromossomo] = cp.copy(filhos.cromossomos[cromossomo])
+        return populacao_final

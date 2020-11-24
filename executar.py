@@ -2,7 +2,7 @@ from objetos import Parametros, Populacao
 
 
 geracoes = 10
-numero_de_cromossomos = 2
+numero_de_cromossomos = 5
 taxa_de_mutacao = 0.80
 taxa_de_crossover = 0.01
 taxa_de_escolha_cromossomo = 0.80
@@ -10,18 +10,7 @@ taxa_de_escolha_cromossomo = 0.80
 parametros = Parametros(geracoes, taxa_de_mutacao, taxa_de_crossover, taxa_de_escolha_cromossomo)
 populacao = Populacao(numero_de_cromossomos, parametros)
 populacao.gera_posicoes_aleatorias()
-populacao_selecionada = populacao.seleciona_cromossomos()
-populacao_cruzada = populacao.cruza_cromossomos(populacao_selecionada)
-populacao_cruzada.mutacao_cromossomos()
-
-'''
-for cromossomo in range(0, numero_de_cromossomos):
-    print("Rainhas se atacando ", populacao.cromossomos[cromossomo].fitness)
-    print("bits: ", populacao.cromossomos[cromossomo].bits.bin)
-    print(populacao.cromossomos[cromossomo].tabuleiro)
-
-for cromossomo in range(0, numero_de_cromossomos):
-    print("Rainhas se atacando ", nova_populacao.cromossomos[cromossomo].fitness)
-    print("bits: ", nova_populacao.cromossomos[cromossomo].bits.bin)
-    print(nova_populacao.cromossomos[cromossomo].tabuleiro)
-'''
+candidatos = populacao.seleciona_cromossomos()
+filhos = candidatos.cruza_cromossomos()
+filhos.mutacao_cromossomos()
+populacao = populacao.selecao_natural(filhos)
