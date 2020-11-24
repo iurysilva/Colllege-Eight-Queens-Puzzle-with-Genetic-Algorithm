@@ -12,14 +12,13 @@ populacao = Populacao(numero_de_cromossomos, parametros)
 populacao.gera_posicoes_aleatorias()
 populacao_selecionada = populacao.seleciona_cromossomos()
 populacao_cruzada = populacao.cruza_cromossomos(populacao_selecionada)
-populacao_cruzada.mutacao_cromossomos()
 
-'''
 for cromossomo in range(0, numero_de_cromossomos):
     print("Rainhas se atacando ", populacao.cromossomos[cromossomo].fitness)
     print("bits: ", populacao.cromossomos[cromossomo].bits.bin)
     print(populacao.cromossomos[cromossomo].tabuleiro)
 
+'''
 for cromossomo in range(0, numero_de_cromossomos):
     print("Rainhas se atacando ", nova_populacao.cromossomos[cromossomo].fitness)
     print("bits: ", nova_populacao.cromossomos[cromossomo].bits.bin)
