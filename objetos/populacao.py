@@ -1,7 +1,6 @@
 from objetos.cromossomo import Cromossomo
 import numpy as np
 import copy as cp
-from procedimentos import gera_filho
 
 
 class Populacao:
@@ -51,11 +50,13 @@ class Populacao:
     def cruza_cromossomos(self):
         filhos = Populacao(self.numero_cromossomos, self.parametros)
         for cromossomo in range(0, self.numero_cromossomos, 2):
+            filho_1 = Cromossomo()
+            filho_2 = Cromossomo()
             ponto = np.random.randint(1, 8)
             pai = cp.copy(self.cromossomos[cromossomo])
             mae = cp.copy(self.cromossomos[cromossomo+1])
-            filho_1 = gera_filho(pai, mae, ponto)
-            filho_2 = gera_filho(mae, pai, ponto)
+            filho_1.posicao_baseada_nos_pais(pai, mae, ponto)
+            filho_2.posicao_baseada_nos_pais(mae, pai, ponto)
             filhos.cromossomos[cromossomo] = filho_1
             filhos.cromossomos[cromossomo+1] = filho_2
         return filhos

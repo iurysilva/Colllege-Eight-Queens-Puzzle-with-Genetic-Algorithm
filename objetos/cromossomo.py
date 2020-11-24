@@ -7,13 +7,27 @@ class Cromossomo:
         self.bits = bitstring.BitArray(bin='')
         self.fitness = 0
         self.tabuleiro = np.zeros((8, 8))
-        self.tempo_de_encontro = None
 
     def __repr__(self):
         return str(self.bits.bin)
 
     def get_fitness(self):
         return self.fitness
+
+    def posicao_baseada_nos_pais(self, cromossomo_1, cromossomo_2, ponto):
+        colunas_utilizadas = np.ones(8, dtype='int') * -1
+        cont = 0
+        bits = cromossomo_2.bits[:3 * ponto]
+        bits.insert(cromossomo_2.bits[3 * ponto:], 0)
+        bits.insert(cromossomo_1.bits[:3 * ponto], 0)
+        for bit in range(0, 24 + ponto * 3, 3):
+            if int(bits[bit:bit + 3].bin, 2) not in colunas_utilizadas:
+                coluna = int(bits[bit:bit + 3].bin, 2)
+                colunas_utilizadas[cont] = coluna
+                cont += 1
+                self.bits.insert(bits[bit:bit + 3], self.bits.len)
+                self.tabuleiro[cont - 1][coluna] = 1
+        self.calcular_fitness()
 
     def calcular_fitness(self):
         fitness = 0
