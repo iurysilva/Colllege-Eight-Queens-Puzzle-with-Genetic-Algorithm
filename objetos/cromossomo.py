@@ -7,6 +7,7 @@ class Cromossomo:
         self.bits = bitstring.BitArray(bin='')
         self.fitness = 0
         self.tabuleiro = np.zeros((8, 8))
+        self.tempo_de_encontro = None
 
     def __repr__(self):
         return str(self.bits.bin)
