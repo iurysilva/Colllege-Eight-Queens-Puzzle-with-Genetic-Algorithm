@@ -1,1 +1,2 @@
 from procedimentos.gera_filho import gera_filho
+from procedimentos.algoritmo_genetico import algoritmo_genetico
