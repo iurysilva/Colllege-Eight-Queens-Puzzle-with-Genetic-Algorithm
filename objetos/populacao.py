@@ -1,6 +1,7 @@
 from objetos.cromossomo import Cromossomo
 import numpy as np
 import copy as cp
+import bitstring
 
 
 class Populacao:
@@ -14,6 +15,7 @@ class Populacao:
 
     def gera_posicoes_aleatorias(self):
         for cromossomo in range(0, self.numero_cromossomos):
+            self.cromossomos[cromossomo].bits = bitstring.BitArray(bin='')
             colunas = np.arange(0, 8)
             np.random.shuffle(colunas)
             for linha_rainha in range(0, 8):

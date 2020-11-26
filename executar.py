@@ -2,7 +2,7 @@ from objetos import Parametros, Populacao, Algoritmo_Genetico
 
 
 geracoes = 1000
-numero_de_execucoes = 1
+numero_de_execucoes = 2
 numero_de_cromossomos = 20
 taxa_de_mutacao = 0.80
 taxa_de_crossover = 0.01
@@ -15,7 +15,7 @@ algoritmo_genetico.executar()
 
 for execucao in range(numero_de_execucoes):
     print("iterações necessárias: ", algoritmo_genetico.iteracoes_executadas[execucao])
-    print("bits", algoritmo_genetico.resultados[0])
-    print("fitness: ", algoritmo_genetico.resultados[0].fitness)
+    print("bits", algoritmo_genetico.resultados[execucao])
+    print("fitness: ", algoritmo_genetico.resultados[execucao].fitness)
     print("tabuleiro encontrado")
-    print(algoritmo_genetico.resultados[0].tabuleiro)
+    print(algoritmo_genetico.resultados[execucao].tabuleiro)
