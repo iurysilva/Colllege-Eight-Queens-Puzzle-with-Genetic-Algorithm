@@ -1,3 +1,6 @@
+import numpy as np
+import time
+
 class Algoritmo_Genetico:
     def __init__(self, populacao, parametros, numero_execucoes):
         self.populacao = populacao
@@ -5,9 +8,11 @@ class Algoritmo_Genetico:
         self.numero_execucoes = numero_execucoes
         self.iteracoes_executadas = [i for i in range(self.numero_execucoes)]
         self.resultados = [i for i in range(self.numero_execucoes)]
+        self.time_elapsed = np.array([])
 
     def executar(self):
         for execucao in range(self.numero_execucoes):
+            time_start = time.perf_counter()
             self.populacao.gera_posicoes_aleatorias()
             encontrou = False
             for geracao in range(self.parametros.geracoes):
@@ -23,3 +28,4 @@ class Algoritmo_Genetico:
             if not encontrou:
                 self.iteracoes_executadas[execucao] = self.parametros.geracoes
                 self.resultados[execucao] = self.populacao.cromossomos[0]
+            self.time_elapsed = np.append(self.time_elapsed, time.perf_counter() - time_start)
