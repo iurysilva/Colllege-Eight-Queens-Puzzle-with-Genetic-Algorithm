@@ -25,6 +25,9 @@ class Populacao:
                 self.cromossomos[cromossomo].tabuleiro[linha_rainha, coluna_rainha] = 1
             self.cromossomos[cromossomo].calcular_fitness()
 
+    def ordena_populacao(self):
+        self.cromossomos = sorted(self.cromossomos, key=Cromossomo.get_fitness)
+
     def seleciona_cromossomos(self):
         numero_cromossomos = self.numero_cromossomos
         if numero_cromossomos % 2 != 0:
@@ -83,8 +86,7 @@ class Populacao:
 
     def selecao_natural(self, filhos):
         populacao_final = Populacao(self.numero_cromossomos, self.parametros)
-        self.cromossomos = sorted(self.cromossomos, key=Cromossomo.get_fitness)
-        filhos.cromossomos = sorted(filhos.cromossomos, key=Cromossomo.get_fitness)
+        filhos.ordena_populacao()
         for cromossomo in range(self.numero_cromossomos):
             if self.cromossomos[cromossomo].fitness <= filhos.cromossomos[cromossomo].fitness:
                 populacao_final.cromossomos[cromossomo] = cp.copy(self.cromossomos[cromossomo])
