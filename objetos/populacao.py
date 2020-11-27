@@ -47,9 +47,9 @@ class Populacao:
                 cromossomo_pior = cromossomo_1
 
             if chance_escolha <= 0.80:
-                nova_populacao.cromossomos[i] = cp.copy(cromossomo_melhor)
+                nova_populacao.cromossomos[i] = cp.deepcopy(cromossomo_melhor)
             else:
-                nova_populacao.cromossomos[i] = cp.copy(cromossomo_pior)
+                nova_populacao.cromossomos[i] = cp.deepcopy(cromossomo_pior)
         return nova_populacao
 
     def cruza_cromossomos(self):

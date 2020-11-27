@@ -14,6 +14,7 @@ algoritmo_genetico = Algoritmo_Genetico(populacao, numero_de_execucoes)
 
 algoritmo_genetico.executar()
 
+
 for execucao in range(numero_de_execucoes):
     print("iterações necessárias: ", algoritmo_genetico.iteracoes_executadas[execucao])
     print("bits", algoritmo_genetico.resultados[execucao])
