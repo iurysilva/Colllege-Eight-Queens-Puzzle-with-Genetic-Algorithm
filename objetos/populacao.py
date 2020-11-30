@@ -54,15 +54,16 @@ class Populacao:
 
     def cruza_cromossomos(self):
         for cromossomo in range(0, self.numero_cromossomos, 2):
-            filho_1 = Cromossomo()
-            filho_2 = Cromossomo()
-            ponto = np.random.randint(1, 8)
-            pai = self.cromossomos[cromossomo]
-            mae = self.cromossomos[cromossomo+1]
-            filho_1.posicao_baseada_nos_pais(pai, mae, ponto)
-            filho_2.posicao_baseada_nos_pais(mae, pai, ponto)
-            self.cromossomos[cromossomo] = filho_1
-            self.cromossomos[cromossomo+1] = filho_2
+            if np.random.uniform(0, 1) <= self.parametros.taxa_crossover:
+                filho_1 = Cromossomo()
+                filho_2 = Cromossomo()
+                ponto = np.random.randint(1, 8)
+                pai = self.cromossomos[cromossomo]
+                mae = self.cromossomos[cromossomo+1]
+                filho_1.posicao_baseada_nos_pais(pai, mae, ponto)
+                filho_2.posicao_baseada_nos_pais(mae, pai, ponto)
+                self.cromossomos[cromossomo] = filho_1
+                self.cromossomos[cromossomo+1] = filho_2
 
     def mutacao_cromossomos(self):
         for cromossomo in range(self.numero_cromossomos):

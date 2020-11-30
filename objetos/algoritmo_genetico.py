@@ -29,6 +29,7 @@ class Algoritmo_Genetico:
 
     def executar(self):
         for execucao in range(self.numero_execucoes):
+            print("Realizando Execução %d" % execucao)
             time_start = time.perf_counter()
             self.populacao = Populacao(self.populacao.numero_cromossomos, self.populacao.parametros)
             self.populacao.gera_posicoes_aleatorias()

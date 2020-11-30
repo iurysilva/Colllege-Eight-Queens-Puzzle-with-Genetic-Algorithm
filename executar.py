@@ -2,10 +2,10 @@ from objetos import Parametros, Populacao, Algoritmo_Genetico
 import numpy as np
 
 geracoes = 1000
-numero_de_execucoes = 1
+numero_de_execucoes = 50
 numero_de_cromossomos = 20
-taxa_de_mutacao = 0.80
-taxa_de_crossover = 0.01
+taxa_de_mutacao = 0.25
+taxa_de_crossover = 0.80
 taxa_de_escolha_cromossomo = 0.80
 
 parametros = Parametros(geracoes, taxa_de_mutacao, taxa_de_crossover, taxa_de_escolha_cromossomo)
