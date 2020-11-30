@@ -53,18 +53,16 @@ class Populacao:
         return nova_populacao
 
     def cruza_cromossomos(self):
-        filhos = Populacao(self.numero_cromossomos, self.parametros)
         for cromossomo in range(0, self.numero_cromossomos, 2):
             filho_1 = Cromossomo()
             filho_2 = Cromossomo()
             ponto = np.random.randint(1, 8)
-            pai = cp.copy(self.cromossomos[cromossomo])
-            mae = cp.copy(self.cromossomos[cromossomo+1])
+            pai = self.cromossomos[cromossomo]
+            mae = self.cromossomos[cromossomo+1]
             filho_1.posicao_baseada_nos_pais(pai, mae, ponto)
             filho_2.posicao_baseada_nos_pais(mae, pai, ponto)
-            filhos.cromossomos[cromossomo] = filho_1
-            filhos.cromossomos[cromossomo+1] = filho_2
-        return filhos
+            self.cromossomos[cromossomo] = filho_1
+            self.cromossomos[cromossomo+1] = filho_2
 
     def mutacao_cromossomos(self):
         for cromossomo in range(self.numero_cromossomos):

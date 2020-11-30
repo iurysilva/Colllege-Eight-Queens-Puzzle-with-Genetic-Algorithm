@@ -20,9 +20,9 @@ class Algoritmo_Genetico:
                 self.fitness_encontrados[execucao] = self.populacao.cromossomos[0].fitness
                 return 0
             candidatos = self.populacao.seleciona_cromossomos()
-            filhos = candidatos.cruza_cromossomos()
-            filhos.mutacao_cromossomos()
-            self.populacao = self.populacao.selecao_natural(filhos)
+            candidatos.cruza_cromossomos()
+            candidatos.mutacao_cromossomos()
+            self.populacao = self.populacao.selecao_natural(candidatos)
         self.iteracoes_executadas[execucao] = self.populacao.parametros.geracoes
         self.resultados[execucao] = self.populacao.cromossomos[0]
         self.fitness_encontrados[execucao] = self.populacao.cromossomos[0].fitness
