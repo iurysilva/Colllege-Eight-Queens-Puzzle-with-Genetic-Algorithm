@@ -35,16 +35,13 @@ class Populacao:
         nova_populacao = Populacao(numero_cromossomos, self.parametros)
         for i in range(nova_populacao.numero_cromossomos):
             chance_escolha = np.random.uniform(0, 1)
-            cromossomo_1 = np.random.choice(self.cromossomos)
-            cromossomo_2 = np.random.choice(self.cromossomos)
-            while cromossomo_2.bits == cromossomo_1.bits:
-                cromossomo_2 = np.random.choice(self.cromossomos)
-            if cromossomo_1.fitness <= cromossomo_2.fitness:
-                cromossomo_melhor = cromossomo_1
-                cromossomo_pior = cromossomo_2
+            candidatos = np.random.choice(self.cromossomos, 2, replace=False)
+            if candidatos[0].fitness <= candidatos[1].fitness:
+                cromossomo_melhor = candidatos[0]
+                cromossomo_pior = candidatos[1]
             else:
-                cromossomo_melhor = cromossomo_2
-                cromossomo_pior = cromossomo_1
+                cromossomo_melhor = candidatos[1]
+                cromossomo_pior = candidatos[0]
 
             if chance_escolha <= 0.80:
                 nova_populacao.cromossomos[i] = cp.deepcopy(cromossomo_melhor)

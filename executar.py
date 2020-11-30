@@ -4,7 +4,7 @@ import numpy as np
 geracoes = 1000
 numero_de_execucoes = 50
 numero_de_cromossomos = 20
-taxa_de_mutacao = 0.25
+taxa_de_mutacao = 0.03
 taxa_de_crossover = 0.80
 taxa_de_escolha_cromossomo = 0.80
 
@@ -20,8 +20,6 @@ for execucao in range(numero_de_execucoes):
     print("bits", algoritmo_genetico.resultados[execucao])
     print("fitness: ", algoritmo_genetico.fitness_encontrados[execucao])
     print("Tempo de execução: ", algoritmo_genetico.time_elapsed[execucao])
-    print("tabuleiro encontrado")
-    print(algoritmo_genetico.resultados[execucao].tabuleiro)
     print("---------------------------------------------")
 
 
