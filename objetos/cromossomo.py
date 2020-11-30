@@ -25,7 +25,7 @@ class Cromossomo:
                 coluna = int(bits[bit:bit + 3].bin, 2)
                 colunas_utilizadas[cont] = coluna
                 cont += 1
-                self.bits.insert(bits[bit:bit + 3], self.bits.len)
+                self.bits.insert(bits[bit:bit + 3], (cont-1)*3)
                 self.tabuleiro[cont - 1][coluna] = 1
         self.calcular_fitness()
 

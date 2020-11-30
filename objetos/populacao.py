@@ -87,7 +87,7 @@ class Populacao:
         filhos.ordena_populacao()
         for cromossomo in range(self.numero_cromossomos):
             if self.cromossomos[cromossomo].fitness <= filhos.cromossomos[cromossomo].fitness:
-                populacao_final.cromossomos[cromossomo] = cp.copy(self.cromossomos[cromossomo])
+                populacao_final.cromossomos[cromossomo] = self.cromossomos[cromossomo]
             else:
-                populacao_final.cromossomos[cromossomo] = cp.copy(filhos.cromossomos[cromossomo])
+                populacao_final.cromossomos[cromossomo] = filhos.cromossomos[cromossomo]
         return populacao_final
